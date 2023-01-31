@@ -1,0 +1,70 @@
+{
+    "idInforme": 1,
+    "name": "Menú móvil",
+    "form": {
+        "title": -1,
+        "idCategoria": 1,
+        "key": [
+            "idCategoria"
+        ]
+    },
+    "table": {
+        "title": "Menú móvil",
+        "header": {
+            "pk": "#",
+            "codigo": "Código"
+        },
+        "_setFilter": [
+            {
+                "idCategoria": {
+                    "label": "Filtrar por",
+                    "value": "categorias",
+                    "defaultValue": 0
+                }
+            },
+            {
+                "idInforme": 1,
+                "table": true,
+                "key": [
+                    "idCategoria"
+                ]
+            }
+        ],
+        "createSwitch": [
+            "estado",
+            {
+                "idInforme": 1,
+                "className": "switch switch-primary",
+                "confirm": "Confirme que desea cambiar el estado de esta opción?",
+                "key": [
+                    "@actualizarEstado",
+                    "estado",
+                    "idMenu"
+                ]
+            }
+        ],
+        "createSelectpicker": [
+            "grupos",
+            {
+                "idInforme": 1,
+                "table": false,
+                "help": "Los nombres de atributos pasan siempre como toLowerCase()",
+                "key": [
+                    "@actualizarGruposMenu",
+                    "idmenu",
+                    "selected",
+                    "value"
+                ]
+            }
+        ],
+        "fx": [
+            {
+                "addScript": [
+                    {
+                        "innerHTML": "dt.updateOnDraw(function(){ dt.find('tr.result_table_inf').forEach(function(tr){ var td = tr.childNodes[dt.header.menu.index]; td.style.cursor = 'pointer'; td.onclick=function(){ var fr = _form.wLayout; var fd=fr.getDialog('Actualizar',{ idMenu:tr.json.idMenu, menu: tr.json.menu},function(js){ fr._open({idInforme:_inf.idInforme,key:[ {name:'actualizarMenu'}, {name:'idMenu',type:'int',value:js.idMenu}, {name:'menu',type:'text',value:js.menu}]},function(r){ td.innerHTML = js.menu; tr.json.menu = js.menu; fd.close(); }); }) } }); });"
+                    }
+                ]
+            }
+        ]
+    }
+}
